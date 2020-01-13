@@ -3,6 +3,7 @@ import * as React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Link } from "react-router-dom";
+import * as api from "./api";
 import './List.css';
 
 
@@ -57,23 +58,26 @@ class List  extends React.Component {
 	}
 
 	async componentDidMount() {
-		console.log("jndb view.componentDidMount");
-		const response = await fetch(`/api/dish`,{
-			method: 'GET',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-		});
-		if(!response.ok) {
-			return;
-		}
-		const parsedResponse = await response.json();
-		console.log("jndb /api/dish",parsedResponse)
-		if(parsedResponse.status !== 'ok') {
-			return;
-		}
-		this.setState({dishes: parsedResponse.dishes});
+		console.log("jndb list new");
+		const dishes = await api.listDishes();
+		this.setState({dishes: dishes});
+		// jndb
+		// const response = await fetch(`/api/dish`,{
+		// 	method: 'GET',
+		// 	headers: {
+		// 		'Accept': 'application/json',
+		// 		'Content-Type': 'application/json'
+		// 	},
+		// });
+		// if(!response.ok) {
+		// 	return;
+		// }
+		// const parsedResponse = await response.json();
+		// console.log("jndb /api/dish",parsedResponse)
+		// if(parsedResponse.status !== 'ok') {
+		// 	return;
+		// }
+		// this.setState({dishes: parsedResponse.dishes});
 	}
 }
 

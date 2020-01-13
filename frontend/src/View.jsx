@@ -9,6 +9,7 @@ import Col from 'react-bootstrap/Col';
 import Badge from 'react-bootstrap/Badge';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Link } from "react-router-dom";
+import * as api from "./api";
 import './View.css';
 
 class View  extends React.Component {
@@ -63,22 +64,8 @@ class View  extends React.Component {
 
 	async componentDidMount() {
 		console.log("jndb view.componentDidMount");
-		const response = await fetch(`/api/dish/${this.props.id}`,{
-			method: 'GET',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-		});
-		if(!response.ok) {
-			return;
-		}
-		const parsedResponse = await response.json();
-		console.log("jndb /api/dish",parsedResponse)
-		if(parsedResponse.status !== 'ok') {
-			return;
-		}
-		this.setState({dish: parsedResponse.dish});
+		const dish = await api.getDish(this.props.id);
+		this.setState({dish: dish});
 		// this.setState({dish: getDish()});
 	}
 }
