@@ -38,6 +38,20 @@ app.get('/api/dish', async function(req, res) {
 	// res.status(200).json(fakeDishResponse());
 });
 
+// view dishe by id
+app.get('/api/dish/:dishId', async function(req, res) {
+	const dishId = req.params.dishId;
+	const dish = await knex('dishes').where({id: dishId}).first();
+	console.log(`jndb /api/dish/${dishId}#dish`,dish);
+	const ingredients = await knex().from('dishIngredients').pluck('ingredients.name').join('ingredients',{'dishIngredients.ingredientId': 'ingredients.id'}).where({dishId: dishId});
+	console.log(`jndb /api/dish/${dishId}#ingredients`,ingredients);
+	res.status(200).json({
+		status: "ok",
+		dish: dish,
+	});
+	// res.status(200).json(fakeDishResponse());
+});
+
 
 const port = process.env.PORT || 3001;
 
