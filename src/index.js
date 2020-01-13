@@ -17,12 +17,6 @@ if (environment === "development") {
 
 app.use(bodyParser.json());
 
-// jndb
-app.get('/', function(req, res) {
-	res.status(200).send('Yo mannn !');
-});
-
-
 // list dishes
 app.get('/api/dish', async function(req, res) {
 	const dishes = await db.listDishes();
