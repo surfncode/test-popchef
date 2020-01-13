@@ -2,10 +2,9 @@
 import * as React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import './List.css';
 
-const history = useHistory();
 
 class List  extends React.Component {
 	constructor(props) {
@@ -15,10 +14,7 @@ class List  extends React.Component {
 		};
 
 		this.renderDish = this.renderDish.bind(this);
-		this.onClickCard = this.onClickCard.bind(this);
-		this.onClickUpdate = this.onClickUpdate.bind(this);
-
-		// this.history = useHistory();
+		this.onClickDelete = this.onClickDelete.bind(this);
 	}
 
 	render() {
@@ -28,37 +24,31 @@ class List  extends React.Component {
 	}
 
 	renderDish(dish) {
+		const viewUrl = `view/${dish.id}`;
 		return (
 			<Card className="Dish" key={dish.id} data-id={dish.id} onClick={this.onClickCard}>
-			  <Card.Img variant="top" src="default-dish.jpeg" />
+			  <Link to={viewUrl}><Card.Img variant="top" src="default-dish.jpeg" /></Link>
 			  <Card.Body>
-			    <Card.Title>{dish.name}<span className="Price">{dish.price} €</span></Card.Title>
+			  <Card.Title>{dish.name}<span className="Price">{dish.price} €</span></Card.Title>
 			    <Card.Text>{dish.description}</Card.Text>
-			    <Button variant="primary" data-id={dish.id} onClick={this.onClickUpdate}>Update</Button>
+			    <Link to={viewUrl}>
+			    	<Button variant="primary">View</Button>
+			    </Link>
+			    <Link to={"update/"+dish.id}>
+			    	<Button variant="primary">Update</Button>
+			    </Link>
 			    <Button variant="danger" data-id={dish.id} onClick={this.onClickDelete}>Delete</Button>
 			  </Card.Body>
 			</Card>
 		);
 	}
 
-	onClickCard(event) {
-		// const history = useHistory();
-		const id = event.currentTarget.getAttribute("data-id");
-		console.log("jndb onClickCard",id);
-		history.push("/view/"+id);
-
-	}
-
-	onClickUpdate(event) {
-		event.stopPropagation();
-		const id = event.currentTarget.getAttribute("data-id");
-		console.log("jndb onClickUpdate",id);
-	}
-
 	onClickDelete(event) {
 		event.stopPropagation();
 		const id = event.currentTarget.getAttribute("data-id");
 		console.log("jndb onClickDelete",id);
+		const dishes = this.state.dishes.filter(dish => `${dish.id}` !== id);
+		this.setState({dishes: dishes});
 	}
 }
 
