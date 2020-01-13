@@ -165,6 +165,7 @@ function getDish() {
 // jndb
 function getAllIngredients() {
 	return [
+	"Banane",
 	"Carotte",
 	"Huile d'olive",
 	"Miel",

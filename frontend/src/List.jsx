@@ -55,6 +55,27 @@ class List  extends React.Component {
 		const dishes = this.state.dishes.filter(dish => `${dish.id}` !== id);
 		this.setState({dishes: dishes});
 	}
+
+	componentDidMount() {
+		fetch('/api/dish',{
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+		}).then(response => {
+			if(!response.ok) {
+				return;
+			}
+			response.json().then(response => {
+				console.log("jndb /api/dish",response)
+				if(response.status !== 'ok') {
+					return;
+				}
+				this.setState({dishes: response.dishes});
+			});
+		});
+	}
 }
 
 // jndb
