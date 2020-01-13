@@ -22,10 +22,6 @@ app.get('/', function(req, res) {
 	res.status(200).send('Yo mannn !');
 });
 
-// jndb
-app.get('/api/hello', function(req, res) {
-	res.status(200).send('Yo man');
-});
 
 // list dishes
 app.get('/api/dish', async function(req, res) {
@@ -69,12 +65,22 @@ app.post('/api/dish', async function(req, res) {
 
 // update dish
 app.put('/api/dish/:dishId', async function(req, res) {
-	const dishId = await db.updateDish(req.body);
+	await db.updateDish(req.params.dishId,req.body);
 	res.status(200).json({
 		status: "ok",
 	});
 });
 
+// delete dish
+app.delete('/api/dish/:dishId', async function(req, res) {
+	console.log("jndb delete dish");
+	await db.deleteDish(req.params.dishId);
+	res.status(200).json({
+		status: "ok",
+	});
+});
+
+app.use(express.static('frontend/build'));
 
 const port = process.env.PORT || 3001;
 

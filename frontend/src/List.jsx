@@ -49,12 +49,17 @@ class List  extends React.Component {
 		);
 	}
 
-	onClickDelete(event) {
+	async onClickDelete(event) {
 		event.stopPropagation();
 		const id = event.currentTarget.getAttribute("data-id");
 		console.log("jndb onClickDelete",id);
-		const dishes = this.state.dishes.filter(dish => `${dish.id}` !== id);
-		this.setState({dishes: dishes});
+		try {
+			await api.deleteDish(id);
+			const dishes = this.state.dishes.filter(dish => `${dish.id}` !== id);
+			this.setState({dishes: dishes});
+		}catch(error) {
+			console.log("jndb error",error);
+		}
 	}
 
 	async componentDidMount() {
