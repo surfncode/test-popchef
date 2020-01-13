@@ -47,7 +47,7 @@ class View  extends React.Component {
 			    <Card.Text>{dish.description}</Card.Text>
 			    <Card.Subtitle className="mb-2 text-muted">Ingredients</Card.Subtitle>
 			    <ListGroup variant="flush">
-			    	{dish.ingredients.map(ingredient => (<ListGroup.Item>{ingredient}</ListGroup.Item>))}
+			    	{dish.ingredients.map(ingredient => (<ListGroup.Item key={ingredient}>{ingredient}</ListGroup.Item>))}
 			     </ListGroup>
 			    <Link to={"/"}>
 			    	<Button variant="primary">Close</Button>
