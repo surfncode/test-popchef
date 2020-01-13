@@ -19,7 +19,12 @@ class List  extends React.Component {
 
 	render() {
 		return (
-			<div className="List"> {this.state.dishes.map(this.renderDish)} </div>
+			<div className="List"> 
+				<Link to="create" className="Create"> <Button variant="primary">Create</Button> </Link>
+				<div className="ListContainer">
+					{this.state.dishes.map(this.renderDish)} 
+				</div>
+			</div>
 		);
 	}
 
