@@ -26,7 +26,7 @@ app.get('/api/dish', function(req, res) {
 		status: "ok",
 		dishes: [{
 			id: 1,
-			name: "CCarottes rôties, sauce Grecque aux herbes et graines de courge",
+			name: "Carottes rôties, sauce Grecque aux herbes et graines de courge",
 			price: 20,
 			hot: false,
 			description: "Prenez des carottes taillées finement et rôties au four, accompagnez les d'une sauce crémeuse au yaourt grec avec plein de bonnes herbes fraîches et parsemez de graines de courges pour le croquant. Frais et délicieux ! ",
