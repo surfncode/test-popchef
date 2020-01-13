@@ -62,7 +62,25 @@ class View  extends React.Component {
 	}
 
 	componentDidMount() {
-		this.setState({dish: getDish()});
+		fetch(`/api/dish/${this.props.id}`,{
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+		}).then(response => {
+			if(!response.ok) {
+				return;
+			}
+			response.json().then(response => {
+				console.log("jndb /api/dish",response)
+				if(response.status !== 'ok') {
+					return;
+				}
+				this.setState({dish: response.dish});
+			});
+		});
+		// this.setState({dish: getDish()});
 	}
 }
 
