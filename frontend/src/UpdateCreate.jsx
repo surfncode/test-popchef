@@ -70,6 +70,7 @@ class UpdateCreate  extends React.Component {
 				    	onChange={this.onChangeHot}/>
 				  </Form.Group>
 				  <Form.Group controlId="ingredients">
+				  	<Form.Label>Ingredients</Form.Label>
 				  	{this.renderIngredients(dish.ingredients)}
 				  </Form.Group>
 				</Form>
