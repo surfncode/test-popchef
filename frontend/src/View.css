@@ -1,0 +1,11 @@
+
+.ViewDish {
+	display: inline-block;
+	margin: 10px;
+}
+
+
+.ViewDish .Price {
+	padding-left: 10px;
+	font-weight: lighter;
+}

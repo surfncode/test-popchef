@@ -32,7 +32,7 @@ class List  extends React.Component {
 		const viewUrl = `view/${dish.id}`;
 		return (
 			<Card className="Dish" key={dish.id} data-id={dish.id} onClick={this.onClickCard}>
-			  <Link to={viewUrl}><Card.Img variant="top" src="default-dish.jpeg" /></Link>
+			  <Link to={viewUrl}><Card.Img variant="top" src="/default-dish.jpeg" /></Link>
 			  <Card.Body>
 			  <Card.Title>{dish.name}<span className="Price">{dish.price} €</span></Card.Title>
 			    <Card.Text>{dish.description}</Card.Text>
