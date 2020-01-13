@@ -27,15 +27,14 @@ app.get('/api/hello', function(req, res) {
 	res.status(200).send('Yo man');
 });
 
-app.get('/api/dish', function(req, res) {
-	knex('dishes')
-  	.then(rows => {
-  		console.log("jndb /api/dish#rows",rows);
-  		res.status(200).json({
-  			status: "ok",
-  			dishes: rows,
-  		});
-  	});
+// list dishes
+app.get('/api/dish', async function(req, res) {
+	const rows = await knex('dishes');
+	console.log("jndb /api/dish#rows",rows);
+	res.status(200).json({
+		status: "ok",
+		dishes: rows,
+	});
 	// res.status(200).json(fakeDishResponse());
 });
 
