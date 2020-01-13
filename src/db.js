@@ -18,7 +18,36 @@ async function getDish(dishId) {
 	return dish;
 }
 
+function listIngredients() {
+	return knex('ingredients').pluck('name');
+}
+
+async function createDish(dish) {
+	const newDish = Object.assign({},dish);
+	const ingredients = newDish.ingredients;
+	delete newDish.ingredients;
+	const dishIds = await knex('dishes').insert(newDish);
+	const dishId = dishIds[0];
+	console.log("jndb createDish#dishId",dishId);
+	await addDishIngredients(dishId,ingredients);
+	return dishId;
+}
+
+async function addDishIngredients(dishId,ingredients) {
+	const ingredientIds = await knex("ingredients").pluck("id").whereIn("name",ingredients);
+	if(ingredientIds.length === 0) {
+		return false;
+	}
+	const dishIngredients = ingredientIds.map(ingredientId => {
+		return {dishId: dishId, ingredientId: ingredientId};
+	});
+	await knex("dishIngredients").insert(dishIngredients);
+	return true;
+}
+
 module.exports = {
 	listDishes,
-	getDish
+	getDish,
+	listIngredients,
+	createDish,
 }

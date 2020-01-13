@@ -38,6 +38,17 @@ app.get('/api/dish', async function(req, res) {
 	// res.status(200).json(fakeDishResponse());
 });
 
+// list ingredients
+app.get('/api/ingredient', async function(req, res) {
+	const ingredients = await db.listIngredients();
+	console.log("jndb /api/ingredient#ingredients",ingredients);
+	res.status(200).json({
+		status: "ok",
+		ingredients: ingredients,
+	});
+	// res.status(200).json(fakeDishResponse());
+});
+
 // view dishe by id
 app.get('/api/dish/:dishId', async function(req, res) {
 	const dish = await db.getDish(req.params.dishId);
@@ -45,7 +56,15 @@ app.get('/api/dish/:dishId', async function(req, res) {
 		status: "ok",
 		dish: dish,
 	});
-	// res.status(200).json(fakeDishResponse());
+});
+
+// create dish
+app.post('/api/dish', async function(req, res) {
+	const dishId = await db.createDish(req.body);
+	res.status(200).json({
+		status: "ok",
+		dishId: dishId,
+	});
 });
 
 

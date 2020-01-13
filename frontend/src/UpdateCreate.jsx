@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { Link,Redirect } from "react-router-dom";
+import * as api from "./api";
 
 class UpdateCreate  extends React.Component {
 	constructor(props) {
@@ -86,12 +87,25 @@ class UpdateCreate  extends React.Component {
 		return (<Spinner animation="border" />);
 	}
 
-	onClickSave(event) {
+	async onClickSave(event) {
+		if(this.props.id) {
+			await api.updateDish(this.state.dish);
+		}else {
+			await api.createDish(this.state.dish);	
+		}
 		this.setState({saved: true});
 	}
 
-	componentDidMount() {
-		this.setState({dish: getDish(), allIngredients: getAllIngredients()});
+	async componentDidMount() {
+		const ingredients = await api.listIngredients();
+		console.log("jndb updatecreate#ingredients",ingredients);
+		const dish = this.props.id ? 
+			await api.getDish(this.props.id) :
+			getDefaultDish();
+		this.setState({
+			dish: dish, 
+			allIngredients: ingredients,
+		});
 	}
 
 	onChangeName(event) {
@@ -141,6 +155,16 @@ class UpdateCreate  extends React.Component {
 		);
 	}
 
+}
+
+function getDefaultDish() {
+	return {
+		hot: false,
+		name: "",
+		price: "",
+		description: "",
+		ingredients: []
+	};
 }
 
 // jndb
