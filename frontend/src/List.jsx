@@ -56,25 +56,24 @@ class List  extends React.Component {
 		this.setState({dishes: dishes});
 	}
 
-	componentDidMount() {
-		fetch('/api/dish',{
+	async componentDidMount() {
+		console.log("jndb view.componentDidMount");
+		const response = await fetch(`/api/dish`,{
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json'
 			},
-		}).then(response => {
-			if(!response.ok) {
-				return;
-			}
-			response.json().then(response => {
-				console.log("jndb /api/dish",response)
-				if(response.status !== 'ok') {
-					return;
-				}
-				this.setState({dishes: response.dishes});
-			});
 		});
+		if(!response.ok) {
+			return;
+		}
+		const parsedResponse = await response.json();
+		console.log("jndb /api/dish",parsedResponse)
+		if(parsedResponse.status !== 'ok') {
+			return;
+		}
+		this.setState({dishes: parsedResponse.dishes});
 	}
 }
 

@@ -61,25 +61,24 @@ class View  extends React.Component {
 		return (<Spinner animation="border" />);
 	}
 
-	componentDidMount() {
-		fetch(`/api/dish/${this.props.id}`,{
+	async componentDidMount() {
+		console.log("jndb view.componentDidMount");
+		const response = await fetch(`/api/dish/${this.props.id}`,{
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json'
 			},
-		}).then(response => {
-			if(!response.ok) {
-				return;
-			}
-			response.json().then(response => {
-				console.log("jndb /api/dish",response)
-				if(response.status !== 'ok') {
-					return;
-				}
-				this.setState({dish: response.dish});
-			});
 		});
+		if(!response.ok) {
+			return;
+		}
+		const parsedResponse = await response.json();
+		console.log("jndb /api/dish",parsedResponse)
+		if(parsedResponse.status !== 'ok') {
+			return;
+		}
+		this.setState({dish: parsedResponse.dish});
 		// this.setState({dish: getDish()});
 	}
 }
