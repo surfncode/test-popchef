@@ -7,13 +7,11 @@ function listDishes() {
 
 async function getDish(dishId) {
 	const dish = await knex('dishes').where({id: dishId}).first();
-	console.log(`jndb getDish${dishId}#dish`,dish);
 	const ingredients = await knex()
 		.from('dishIngredients')
 		.pluck('ingredients.name')
 		.join('ingredients',{'dishIngredients.ingredientId': 'ingredients.id'})
 		.where({dishId: dishId});
-	console.log(`jndb getDish${dishId}#ingredients`,ingredients);
 	dish.ingredients = ingredients && ingredients.length ? ingredients : [];
 	return dish;
 }
@@ -28,7 +26,6 @@ async function createDish(dish) {
 	delete newDish.ingredients;
 	const dishIds = await knex('dishes').insert(newDish);
 	const dishId = dishIds[0];
-	console.log("jndb createDish#dishId",dishId);
 	await addDishIngredients(dishId,ingredients);
 	return dishId;
 }
@@ -51,7 +48,6 @@ async function updateDish(dishId,dish) {
 	delete newDish.ingredients;
 	delete newDish.id;
 	await knex('dishes').where({id: dishId}).update(newDish);
-	console.log("jndb createDish#dishId",dishId);
 	await clearDishIngredients(dishId);
 	await addDishIngredients(dishId,ingredients);
 	return dishId;

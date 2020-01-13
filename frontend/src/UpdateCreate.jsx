@@ -22,7 +22,6 @@ class UpdateCreate  extends React.Component {
 	}
 
 	render() {
-		console.log("jndb render View");
 		if(this.state.saved) {
 			return (<Redirect to="/" /> );
 		}
@@ -98,7 +97,6 @@ class UpdateCreate  extends React.Component {
 
 	async componentDidMount() {
 		const ingredients = await api.listIngredients();
-		console.log("jndb updatecreate#ingredients",ingredients);
 		const dish = this.props.id ? 
 			await api.getDish(this.props.id) :
 			getDefaultDish();
@@ -110,7 +108,6 @@ class UpdateCreate  extends React.Component {
 
 	onChangeName(event) {
 		const name = event.currentTarget.value;
-		console.log("jndb onChangeName",name);
 		this.setState({dish: Object.assign({},this.state.dish,{name: name})});
 	}
 
@@ -165,38 +162,6 @@ function getDefaultDish() {
 		description: "",
 		ingredients: []
 	};
-}
-
-// jndb
-function getDish() {
-	return {
-		id: 1,
-		name: "Carottes rôties, sauce Grecque aux herbes et graines de courge",
-		price: 20,
-		hot: true,
-		description: "Prenez des carottes taillées finement et rôties au four, accompagnez les d'une sauce crémeuse au yaourt grec avec plein de bonnes herbes fraîches et parsemez de graines de courges pour le croquant. Frais et délicieux ! ",
-		ingredients: [
-		"Carotte",
-		"Huile d'olive",
-		"Miel",
-		"Vinaigre balsamique blanc",
-		"Sel",
-		"Poivre",
-		]
-	};
-}
-
-// jndb
-function getAllIngredients() {
-	return [
-	"Banane",
-	"Carotte",
-	"Huile d'olive",
-	"Miel",
-	"Vinaigre balsamique blanc",
-	"Sel",
-	"Poivre",
-	];
 }
 
 export default UpdateCreate;

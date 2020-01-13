@@ -19,7 +19,6 @@ class View  extends React.Component {
 	}
 
 	render() {
-		console.log("jndb render View");
 		const dish = this.state.dish;
 		const content =  dish ? this.renderDish(dish) : this.renderLoading();
 		return (
@@ -63,30 +62,11 @@ class View  extends React.Component {
 	}
 
 	async componentDidMount() {
-		console.log("jndb view.componentDidMount");
 		const dish = await api.getDish(this.props.id);
 		this.setState({dish: dish});
 		// this.setState({dish: getDish()});
 	}
 }
 
-// jndb
-function getDish() {
-	return {
-		id: 1,
-		name: "Carottes rôties, sauce Grecque aux herbes et graines de courge",
-		price: 20,
-		hot: true,
-		description: "Prenez des carottes taillées finement et rôties au four, accompagnez les d'une sauce crémeuse au yaourt grec avec plein de bonnes herbes fraîches et parsemez de graines de courges pour le croquant. Frais et délicieux ! ",
-		ingredients: [
-		"Carotte",
-		"Huile d'olive",
-		"Miel",
-		"Vinaigre balsamique blanc",
-		"Sel",
-		"Poivre",
-		]
-	};
-}
 
 export default View;

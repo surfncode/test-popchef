@@ -11,7 +11,6 @@ const listDishes = async function() {
 		throw new Error("fetch error");
 	}
 	const parsedResponse = await response.json();
-	console.log("jndb /api/dish",parsedResponse)
 	if(parsedResponse.status !== 'ok') {
 		throw new Error(parsedResponse.status);
 	}
@@ -30,7 +29,6 @@ const getDish = async function(dishId) {
 		throw new Error("fetch error");
 	}
 	const parsedResponse = await response.json();
-	console.log("jndb /api/dish",parsedResponse);
 	if(parsedResponse.status !== 'ok') {
 		throw new Error(parsedResponse.status);
 	}
@@ -49,7 +47,6 @@ const listIngredients = async function() {
 		throw new Error("fetch error");
 	}
 	const parsedResponse = await response.json();
-	console.log("jndb listIngredients",parsedResponse)
 	if(parsedResponse.status !== 'ok') {
 		throw new Error(parsedResponse.status);
 	}
@@ -69,7 +66,6 @@ const createDish = async function(dish) {
 		throw new Error("fetch error");
 	}
 	const parsedResponse = await response.json();
-	console.log("jndb createDish",parsedResponse);
 	if(parsedResponse.status !== 'ok') {
 		throw new Error(parsedResponse.status);
 	}
@@ -89,7 +85,6 @@ const updateDish = async function(dish) {
 		throw new Error("fetch error");
 	}
 	const parsedResponse = await response.json();
-	console.log("jndb updateDish",parsedResponse);
 	if(parsedResponse.status !== 'ok') {
 		throw new Error(parsedResponse.status);
 	}
@@ -97,7 +92,6 @@ const updateDish = async function(dish) {
 };
 
 const deleteDish = async function(dishId) {
-	console.log("jndb deleteDish#dishId",dishId);
 	const response = await fetch(`/api/dish/${dishId}`,{
 		method: 'DELETE',
 		headers: {
@@ -109,7 +103,6 @@ const deleteDish = async function(dishId) {
 		throw new Error("fetch error");
 	}
 	const parsedResponse = await response.json();
-	console.log("jndb deleteDish",parsedResponse);
 	if(parsedResponse.status !== 'ok') {
 		throw new Error(parsedResponse.status);
 	}
