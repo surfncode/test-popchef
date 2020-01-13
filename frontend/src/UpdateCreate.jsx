@@ -17,6 +17,7 @@ class UpdateCreate  extends React.Component {
 		this.onChangeDescription = this.onChangeDescription.bind(this);
 		this.onChangePrice = this.onChangePrice.bind(this);
 		this.onChangeHot = this.onChangeHot.bind(this);
+		this.onChangeIngredient = this.onChangeIngredient.bind(this);
 	}
 
 	render() {
@@ -68,6 +69,9 @@ class UpdateCreate  extends React.Component {
 				    <Form.Check type="checkbox" label="Hot" checked={dish.hot}
 				    	onChange={this.onChangeHot}/>
 				  </Form.Group>
+				  <Form.Group controlId="ingredients">
+				  	{this.renderIngredients(dish.ingredients)}
+				  </Form.Group>
 				</Form>
 				<Button variant="primary" onClick={this.onClickSave}>Save</Button>
 				<Link to={"/"}>
@@ -86,7 +90,7 @@ class UpdateCreate  extends React.Component {
 	}
 
 	componentDidMount() {
-		this.setState({dish: getDish()});
+		this.setState({dish: getDish(), allIngredients: getAllIngredients()});
 	}
 
 	onChangeName(event) {
@@ -110,6 +114,32 @@ class UpdateCreate  extends React.Component {
 		this.setState({dish: Object.assign({},this.state.dish,{hot: hot})});
 	}
 
+	onChangeIngredient(event) {
+		const ingredient = event.currentTarget.getAttribute('data-id');
+		const checked = event.currentTarget.checked;
+		const ingredients = this.state.dish.ingredients;
+		const newIngredients = checked ? 
+			ingredients.concat(ingredient) : 
+			ingredients.filter(currentIngredient => ingredient!==currentIngredient);
+		const newDish = Object.assign({},this.state.dish,{ingredients: newIngredients});
+		this.setState({dish: newDish});
+	}
+
+	renderIngredients(ingredients) {
+		const reducer = (accumulator,value) => {
+			accumulator[value] = true;
+			return accumulator;
+		};
+		const hasIngredient = ingredients.reduce(reducer,{});
+		return this.state.allIngredients.map(
+			(ingredient,index) => (
+				<Form.Check id={`ingredient-${index}`} type="checkbox" key={ingredient} label={ingredient} 
+					checked={!!hasIngredient[ingredient]}
+				    data-id={ingredient} onChange={this.onChangeIngredient}/>
+			)
+		);
+	}
+
 }
 
 // jndb
@@ -129,6 +159,18 @@ function getDish() {
 		"Poivre",
 		]
 	};
+}
+
+// jndb
+function getAllIngredients() {
+	return [
+	"Carotte",
+	"Huile d'olive",
+	"Miel",
+	"Vinaigre balsamique blanc",
+	"Sel",
+	"Poivre",
+	];
 }
 
 export default UpdateCreate;
