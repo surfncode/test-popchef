@@ -45,9 +45,27 @@ async function addDishIngredients(dishId,ingredients) {
 	return true;
 }
 
+async function updateDish(dish) {
+	const newDish = Object.assign({},dish);
+	const ingredients = newDish.ingredients;
+	delete newDish.ingredients;
+	const dishId = newDish.id;
+	delete newDish.id;
+	await knex('dishes').where({id: dishId}).update(newDish);
+	console.log("jndb createDish#dishId",dishId);
+	await clearDishIngredients(dishId);
+	await addDishIngredients(dishId,ingredients);
+	return dishId;
+}
+
+function clearDishIngredients(dishId) {
+	return knex("dishIngredients").where({dishId: dishId}).del();
+}
+
 module.exports = {
 	listDishes,
 	getDish,
 	listIngredients,
 	createDish,
+	updateDish,
 }

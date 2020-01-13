@@ -67,6 +67,14 @@ app.post('/api/dish', async function(req, res) {
 	});
 });
 
+// update dish
+app.put('/api/dish/:dishId', async function(req, res) {
+	const dishId = await db.updateDish(req.body);
+	res.status(200).json({
+		status: "ok",
+	});
+});
+
 
 const port = process.env.PORT || 3001;
 
