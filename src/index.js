@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const http = require("http");
 const knex = require("./knexClient");
+const db = require("./db");
 
 const environment = process.env.NODE_ENV;
 
@@ -29,22 +30,18 @@ app.get('/api/hello', function(req, res) {
 
 // list dishes
 app.get('/api/dish', async function(req, res) {
-	const rows = await knex('dishes');
-	console.log("jndb /api/dish#rows",rows);
+	const dishes = await db.listDishes();
+	console.log("jndb /api/dish#dishes",dishes);
 	res.status(200).json({
 		status: "ok",
-		dishes: rows,
+		dishes: dishes,
 	});
 	// res.status(200).json(fakeDishResponse());
 });
 
 // view dishe by id
 app.get('/api/dish/:dishId', async function(req, res) {
-	const dishId = req.params.dishId;
-	const dish = await knex('dishes').where({id: dishId}).first();
-	console.log(`jndb /api/dish/${dishId}#dish`,dish);
-	const ingredients = await knex().from('dishIngredients').pluck('ingredients.name').join('ingredients',{'dishIngredients.ingredientId': 'ingredients.id'}).where({dishId: dishId});
-	console.log(`jndb /api/dish/${dishId}#ingredients`,ingredients);
+	const dish = await db.getDish(req.params.dishId);
 	res.status(200).json({
 		status: "ok",
 		dish: dish,
