@@ -1,9 +1,15 @@
+
+require('dotenv').config()
 const express = require("express");
 const bodyParser = require('body-parser');
 const app = express();
 const http = require("http");
+const knex = require("./knexClient");
 
 const environment = process.env.NODE_ENV;
+
+console.log("jndb process.env.PORT",process.env.PORT);
+console.log("jndb process.env.JAWSDB_MARIA_URL",process.env.JAWSDB_MARIA_URL);
 
 if (environment === "development") {
 	app.set('json spaces', 4);
@@ -22,7 +28,29 @@ app.get('/api/hello', function(req, res) {
 });
 
 app.get('/api/dish', function(req, res) {
-	res.status(200).json({
+	knex('dishes')
+  	.then(rows => {
+  		console.log("jndb /api/dish#rows",rows);
+  		res.status(200).json({
+  			status: "ok",
+  			dishes: rows,
+  		});
+  	});
+	// res.status(200).json(fakeDishResponse());
+});
+
+
+const port = process.env.PORT || 3001;
+
+http.createServer(app).listen({
+	port: port
+}, function() {
+	console.log(`app listening on  ${port}`);
+});
+
+// jndb
+function fakeDishResponse() {
+	return {
 		status: "ok",
 		dishes: [{
 			id: 1,
@@ -109,13 +137,5 @@ app.get('/api/dish', function(req, res) {
 				"Poivre",
 			]
 		}]
-	});
-});
-
-const port = process.env.PORT || 3001;
-
-http.createServer(app).listen({
-	port: port
-}, function() {
-	console.log(`app listening on  ${port}`);
-});
+	};
+}
