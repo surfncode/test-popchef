@@ -19,7 +19,7 @@ The following environment variables can be used to configure node app
 * PORT: (optionnal, default to 3001) port used by node http server. Please leave port to 3001 for development mode
 * JAWSDB_MARIA_URL: (required) mysql connection string. The format is mysql://login:password@host:port/database
 
-Variables may be set up in a .env:
+Variables may be set up in a .env located at root directory:
 ```bash
 JAWSDB_MARIA_URL=mysql://login:password@host:port/database
 PORT=3001
@@ -64,9 +64,10 @@ Then open http://localhost:3001
 
 ## File organisation
 
-Frontend code is located in the directoy "frontend" (created with react-create-app), everything other file is related to backend.
+Frontend code is located in the directoy "frontend" (created with react-create-app), every other file is related to backend.
 
-In development mode backend is called by frontend through a proxy parameter (see frontend/package.json#proxy)
+In development mode the backend is called by the frontend through a proxy parameter (see frontend/package.json#proxy).
+
 In production mode, the frontend build (in frontend/build) is served by the backend.
 
 The sql seed file is init.sql
