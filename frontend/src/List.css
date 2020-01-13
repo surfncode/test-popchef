@@ -1,0 +1,17 @@
+
+.Dish {
+	display: inline-block;
+	margin: 10px;
+	width: 286px;
+	cursor: pointer;
+}
+
+.Dish .btn {
+	cursor: pointer;
+	margin-right: 10px;
+}
+
+.Price {
+	padding-left: 10px;
+	font-weight: lighter;
+}
