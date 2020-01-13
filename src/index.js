@@ -112,7 +112,7 @@ app.get('/api/dish', function(req, res) {
 	});
 });
 
-const port = process.env.NODE_APP_PORT || 3001;
+const port = process.env.PORT || 3001;
 
 http.createServer(app).listen({
 	port: port
