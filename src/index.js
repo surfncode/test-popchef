@@ -12,6 +12,11 @@ if (environment === "development") {
 app.use(bodyParser.json());
 
 // jndb
+app.get('/', function(req, res) {
+	res.status(200).send('Yo mannn !');
+});
+
+// jndb
 app.get('/api/hello', function(req, res) {
 	res.status(200).send('Yo man');
 });
